@@ -2,7 +2,7 @@
 
 ![LookAtMe front page](https://www.nheek.com/featured-projects/lookatme.png)
 
-LookAtMe is my first attempt at making a Socket.IO web application. It has given me a lot of new ways to think about how to make a code scalable. The real-time feature of LookAtMe will also build upon my future projects such real-time messaging applications and such.
+LookAtMe is my first attempt at making a Socket.IO web application. It has given me a lot of new ways to think about how to make a code scalable. The real-time feature of LookAtMe will also build upon my future projects such as real-time messaging applications and so.
 
 ## Table of Contents
 
