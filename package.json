@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build:css": "npx tailwindcss -i ./public/styles/style.css -o ./public/styles/tailwind.css",
+    "dev": "nodemon app.js",
     "start": "node app.js"
   },
   "keywords": [],
