@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Set the document character set and viewport for responsiveness -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <!-- Include the Socket.IO client library -->
+  <script src="/static/socket.io-client/dist/socket.io.js"></script>
+
+  <!-- Include the Tailwind CSS stylesheet -->
+  <link href="/styles/tailwind.css" rel="stylesheet" />
+
+  <!-- Set the page title dynamically based on the provided 'pageTitle' variable -->
+  <title><%= pageTitle %> | LookAtMe</title>
+</head>
+<body class="w-full bg-gray-200 relative">
+  <!-- Main content container with padding -->
+  <main class="h-screen w-full py-14 px-4">
+    <!-- Two sections displaying overall views and overall tap counts -->
+    <section class="w-full flex">
+      <!-- Display overall views -->
+      <div class="w-1/2 flex flex-col justify-center items-center">
+        <h3 class="text-xl">Overall Views</h3>
+        <span id="looked-overall" class="text-3xl"><%= counter[0].looked_overall %></span>
+      </div>
+      <!-- Display overall tap counts -->
+      <div class="w-1/2 flex flex-col justify-center items-center">
+        <h3 class="text-xl">Overall Tap</h3>
+        <span id="tapped-overall" class="text-3xl"><%= counter[0].tapped_overall %></span>
+      </div>
+    </section>
+
+    <!-- Container for real-time information about people currently looking -->
+    <div class="w-[85%] text-center absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+      <h2 class="text-3xl m-auto">People looking</h2>
+      <div id="looking-right-now" class="text-6xl m-auto"></div>
+    </div>
+
+    <!-- Button for triggering the 'updateTapCounter' function -->
+    <button class="absolute bottom-[5%] left-1/2 transform -translate-x-1/2 w-[80%] md:w-[50%] bg-blue-400 focus:bg-blue-600 active:border-2 active:border-solid active:border-blue-200 text-3xl rounded-xl py-2 text-gray-200" onclick="updateTapCounter();">Tap here</button>
+  </main>
+</body>
+</html>
+
+<!-- Include the application's JavaScript file -->
+<script src="/lib/index.js"></script>
