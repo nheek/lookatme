@@ -26,7 +26,7 @@ const limiter = rateLimit({
 
 // Set up middleware and routes
 // Apply the limiter middleware to all routes
-app.use(limiter);
+// app.use(limiter);
 
 // Serve static files (public, lib, and node_modules directories)
 app.use(express.static(path.join(__dirname, 'public')));
