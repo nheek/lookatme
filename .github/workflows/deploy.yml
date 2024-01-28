@@ -35,8 +35,7 @@ jobs:
           # Log in to Docker Hub and push the images
           echo "${{ secrets.DOCKERHUB_TOKEN }}" | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
           docker-compose build
-          docker-compose push node-app
-          docker-compose push mysql-db
+          docker-compose push
 
       - name: Deploy to Server
         uses: appleboy/ssh-action@master
@@ -46,11 +45,11 @@ jobs:
           key: ${{ secrets.SERVER_SSH_KEY }}
           script: |
             # Change to the appropriate directory
-            cd /root/apps/lookatme/
+            cd /apps/lookatme/
             ls
 
             # Pull the Docker Compose project on the remote server
-            docker-compose -f /root/apps/lookatme/docker-compose.yml pull
-            docker-compose -f /root/apps/lookatme/docker-compose.yml down
-            docker-compose -f /root/apps/lookatme/docker-compose.yml up -d
+            docker-compose pull
+            docker-compose down
+            docker-compose up -d
   
