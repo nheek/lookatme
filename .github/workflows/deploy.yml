@@ -27,8 +27,8 @@ jobs:
             cd apps/lookatme/
 
             # Pull the Docker Compose project on the remote server
-            docker-compose pull ${{ secrets.DOCKERHUB_USERNAME }}/lookatme:latest
-            docker-compose pull mysql
+            docker pull ${{ secrets.DOCKERHUB_USERNAME }}/lookatme:latest
+            docker pull mysql
             git pull origin main
             docker-compose down
             docker-compose build
