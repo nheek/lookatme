@@ -11,12 +11,13 @@ services:
       - .env
     environment:
       - PLACEHOLDER=YES
+    image: ${{ secrets.DOCKERHUB_USERNAME }}/lookatme:latest
 
   mysql-db:
-    image: mysql:latest
     env_file:
       - .env
     environment:
       MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
     volumes:
       - ./create_database.sql:/docker-entrypoint-initdb.d/create_database.sql
+    image: ${{ secrets.DOCKERHUB_USERNAME }}/lookatme:latest
