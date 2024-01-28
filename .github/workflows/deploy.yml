@@ -39,6 +39,6 @@ jobs:
           username: ${{ secrets.SERVER_USERNAME }}
           key: ${{ secrets.SERVER_SSH_KEY }}
           script: |
-            docker-compose pull
+            docker-compose pull ${{ secrets.DOCKERHUB_USERNAME }}/lookatme:latest
             docker-compose down
             docker-compose up -d
