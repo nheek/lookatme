@@ -30,7 +30,5 @@ jobs:
             docker pull ${{ secrets.DOCKERHUB_USERNAME }}/lookatme:latest
             docker pull mysql
             git pull origin main
-            docker-compose down
-            docker-compose build
             docker-compose up -d
   
