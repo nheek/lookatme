@@ -27,15 +27,21 @@ jobs:
           echo "SESSION_SECRET=${{ secrets.SESSION_SECRET }}" >> .env
           echo "DOCKERHUB_USERNAME=${{ secrets.DOCKERHUB_USERNAME }}" >> .env
 
-      - name: Create placeholder docker-compose.yml
-        run: touch docker-compose.yml
+      - name: Create Docker Compose file
+        run: |
+          # Create a basic docker-compose.yml file
+          echo "version: '3'" >> docker-compose.yml
+          echo "services:" >> docker-compose.yml
+          echo "  your-service:" >> docker-compose.yml
+          echo "    image: ${{ secrets.DOCKERHUB_USERNAME }}/lookatme:latest" >> docker-compose.yml
+          # Add other necessary configurations
 
       - name: Build and Push Docker Images
         run: |
           # Log in to Docker Hub and push the images
           echo "${{ secrets.DOCKERHUB_TOKEN }}" | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
-          docker-compose build
-          docker push ${{ secrets.DOCKERHUB_USERNAME }}/lookatme:latest
+          docker-compose -f docker-compose.yml build
+          docker-compose -f docker-compose.yml push
 
       - name: Deploy to Server
         uses: appleboy/ssh-action@master
@@ -45,6 +51,6 @@ jobs:
           key: ${{ secrets.SERVER_SSH_KEY }}
           script: |
             # Deploy the Docker Compose project on the remote server
-            docker pull ${{ secrets.DOCKERHUB_USERNAME }}/lookatme:latest
-            docker-compose down
-            docker-compose up -d
+            docker-compose -f docker-compose.yml pull
+            docker-compose -f docker-compose.yml down
+            docker-compose -f docker-compose.yml up -d
