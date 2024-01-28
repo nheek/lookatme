@@ -18,6 +18,7 @@ jobs:
 
       - name: Generate .env file
         run: |
+          # Create a .env file with sensitive information
           echo "MYSQL_PORT=${{ secrets.MYSQL_PORT }}" >> .env
           echo "MYSQL_HOST=${{ secrets.MYSQL_HOST }}" >> .env
           echo "MYSQL_USER=${{ secrets.MYSQL_USER }}" >> .env
@@ -26,8 +27,12 @@ jobs:
           echo "SESSION_SECRET=${{ secrets.SESSION_SECRET }}" >> .env
           echo "DOCKERHUB_USERNAME=${{ secrets.DOCKERHUB_USERNAME }}" >> .env
 
+      - name: Create placeholder docker-compose.yml
+        run: touch docker-compose.yml
+
       - name: Build and Push Docker Images
         run: |
+          # Log in to Docker Hub and push the images
           echo "${{ secrets.DOCKERHUB_TOKEN }}" | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
           docker-compose build
           docker push ${{ secrets.DOCKERHUB_USERNAME }}/lookatme:latest
@@ -39,6 +44,7 @@ jobs:
           username: ${{ secrets.SERVER_USERNAME }}
           key: ${{ secrets.SERVER_SSH_KEY }}
           script: |
+            # Deploy the Docker Compose project on the remote server
             docker-compose pull ${{ secrets.DOCKERHUB_USERNAME }}/lookatme:latest
             docker-compose down
             docker-compose up -d
