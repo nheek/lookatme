@@ -11,6 +11,7 @@ services:
       - .env
     environment:
       - PLACEHOLDER=YES
+    image: "nheek/lookatme:latest" 
 
   mysql-db:
     image: mysql:latest
