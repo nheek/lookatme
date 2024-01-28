@@ -29,7 +29,7 @@ jobs:
       - name: Build and Push Docker Images
         run: |
           echo "${{ secrets.DOCKERHUB_TOKEN }}" | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
-          docker-compose up --build
+          docker-compose build
           docker push ${{ secrets.DOCKERHUB_USERNAME }}/lookatme:latest
 
       - name: Deploy to Server
