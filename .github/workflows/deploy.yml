@@ -45,6 +45,6 @@ jobs:
           key: ${{ secrets.SERVER_SSH_KEY }}
           script: |
             # Deploy the Docker Compose project on the remote server
-            docker-compose pull ${{ secrets.DOCKERHUB_USERNAME }}/lookatme:latest
+            docker pull ${{ secrets.DOCKERHUB_USERNAME }}/lookatme:latest
             docker-compose down
             docker-compose up -d
