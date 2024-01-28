@@ -32,9 +32,14 @@ jobs:
           docker-compose build
           docker-compose push
 
-      - name: Copy Docker Compose file to server
+      - name: Install rsync
         run: |
-          scp -i ${{ secrets.SERVER_SSH_KEY }} docker-compose.yml ${{ secrets.SERVER_USERNAME }}@${{ secrets.SERVER_IP }}:/apps/lookatme/
+          sudo apt-get update
+          sudo apt-get install rsync -y
+
+      - name: Copy Docker Compose file to server using rsync
+        run: |
+          rsync -av -e "ssh -i ${{ secrets.SERVER_SSH_KEY }}" docker-compose.yml ${{ secrets.SERVER_USERNAME }}@${{ secrets.SERVER_IP }}:/apps/lookatme/
   
       - name: Deploy to Server
         uses: appleboy/ssh-action@master
