@@ -45,7 +45,11 @@ jobs:
           username: ${{ secrets.SERVER_USERNAME }}
           key: ${{ secrets.SERVER_SSH_KEY }}
           script: |
-            # Deploy the Docker Compose project on the remote server
-            docker-compose pull ${{ secrets.DOCKERHUB_USERNAME }}/lookatme:latest
+            # Change to the appropriate directory
+            cd /root/apps/lookatme/
+
+            # Pull the Docker Compose project on the remote server
+            docker-compose pull
             docker-compose down
             docker-compose up -d
+  
