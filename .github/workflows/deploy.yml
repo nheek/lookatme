@@ -54,8 +54,8 @@ jobs:
             echo "MYSQL_DATABASE=${{ secrets.MYSQL_DATABASE }}" >> .env
             echo "SESSION_SECRET=${{ secrets.SESSION_SECRET }}" >> .env
             echo "DOCKERHUB_USERNAME=${{ secrets.DOCKERHUB_USERNAME }}" >> .env
-            svn checkout https://raw.githubusercontent.com/nheek/lookatme/main/Dockerfile
-            svn checkout https://raw.githubusercontent.com/nheek/lookatme/main/docker-compose.yml
+            curl -O -L https://raw.githubusercontent.com/nheek/lookatme/main/Dockerfile
+            curl -O -L https://raw.githubusercontent.com/nheek/lookatme/main/docker-compose.yml
             # git pull origin actions-test
             docker-compose up -d
   
