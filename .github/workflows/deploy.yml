@@ -45,6 +45,6 @@ jobs:
             # Pull the Docker Compose project on the remote server
             docker pull ${{ secrets.DOCKERHUB_USERNAME }}/lookatme:latest
             docker pull mysql
-            git pull origin actions-test
+            # git pull origin actions-test
             docker-compose up -d
   
