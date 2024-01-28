@@ -39,7 +39,7 @@ jobs:
 
       - name: Copy Docker Compose file to server using rsync
         run: |
-          rsync -av -e "ssh -i ${{ secrets.SERVER_SSH_KEY }}" docker-compose.yml ${{ secrets.SERVER_USERNAME }}@${{ secrets.SERVER_IP }}:apps/lookatme/
+          rsync -av -e "ssh -i ${{ secrets.SERVER_SSH_KEY }}" docker-compose.yml ${{ secrets.SERVER_USERNAME }}@${{ secrets.SERVER_IP }}
   
       - name: Deploy to Server
         uses: appleboy/ssh-action@master
