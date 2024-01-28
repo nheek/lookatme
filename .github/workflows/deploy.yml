@@ -23,7 +23,7 @@ jobs:
           username: ${{ secrets.SERVER_USERNAME }}
           key: ${{ secrets.SERVER_SSH_KEY }}
           script: |
-            # Change to the appropriate directory
+            # Change to the appropriate directory..
             cd apps/lookatme/
 
             # Pull the Docker Compose project on the remote server
