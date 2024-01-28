@@ -47,7 +47,7 @@ jobs:
           username: ${{ secrets.SERVER_USERNAME }}
           key: ${{ secrets.SERVER_SSH_KEY }}
           source: docker-compose.yml
-          target: /apps/lookatme/docker-compose.yml
+          target: /root/apps/lookatme/docker-compose.yml
 
       - name: Deploy to Server
         uses: appleboy/ssh-action@master
@@ -57,6 +57,6 @@ jobs:
           key: ${{ secrets.SERVER_SSH_KEY }}
           script: |
             # Deploy the Docker Compose project on the remote server
-            docker-compose -f /apps/lookatme/docker-compose.yml pull
-            docker-compose -f /apps/lookatme/docker-compose.yml down
-            docker-compose -f /apps/lookatme/docker-compose.yml up -d
+            docker-compose -f /root/apps/lookatme/docker-compose.yml pull
+            docker-compose -f /root/apps/lookatme/docker-compose.yml down
+            docker-compose -f /root/apps/lookatme/docker-compose.yml up -d
