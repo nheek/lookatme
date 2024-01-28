@@ -1,12 +1,14 @@
 {
   "name": "LookAtMe",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "",
   "main": "index.js",
   "scripts": {
+    "setup-database": "mysql -u lookatme -p < create_database.sql",
     "build:css": "npx tailwindcss -i ./public/styles/style.css -o ./public/styles/tailwind.css",
     "dev": "nodemon app.js",
-    "start": "node app.js"
+    "start": "wait-for-it mysql-db:3306 -- npm run start-app",
+    "start-app": "node app.js"
   },
   "keywords": [],
   "author": "",
@@ -21,7 +23,7 @@
     "express-session": "^1.17.3",
     "helmet": "^7.1.0",
     "http": "^0.0.1-security",
-    "mysql2": "^3.7.0",
+    "mysql2": "^3.9.0",
     "socket.io": "^4.7.4",
     "socket.io-client": "^4.7.4"
   },

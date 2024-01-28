@@ -131,6 +131,4 @@ dist
 
 # custom
 .DS_Store
-database.js
-config.js
 package-lock.json
