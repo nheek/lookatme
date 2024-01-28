@@ -45,7 +45,8 @@ jobs:
           key: ${{ secrets.SERVER_SSH_KEY }}
           script: |
             # Change to the appropriate directory
-            cd /apps/lookatme/
+            ls
+            cd apps/lookatme/
             ls
 
             # Pull the Docker Compose project on the remote server
