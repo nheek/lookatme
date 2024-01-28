@@ -11,7 +11,6 @@ services:
       - .env
     environment:
       - PLACEHOLDER=YES
-    command: ["./wait-for-it.sh", "mysql-db:3306", "--", "npm", "start"]
     image: "nheek/lookatme:latest" 
 
   mysql-db:
