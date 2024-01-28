@@ -21,6 +21,3 @@ services:
       MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
     volumes:
       - ./create_database.sql:/docker-entrypoint-initdb.d/create_database.sql
-
-volumes:
-  mysql-data:
