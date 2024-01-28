@@ -27,9 +27,6 @@ jobs:
           echo "SESSION_SECRET=${{ secrets.SESSION_SECRET }}" >> .env
           echo "DOCKERHUB_USERNAME=${{ secrets.DOCKERHUB_USERNAME }}" >> .env
 
-      - name: Create placeholder docker-compose.yml
-        run: touch docker-compose.yml
-
       - name: Build and Push Docker Images
         run: |
           # Log in to Docker Hub and push the images
