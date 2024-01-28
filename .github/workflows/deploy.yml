@@ -35,7 +35,7 @@ jobs:
           # Log in to Docker Hub and push the images
           echo "${{ secrets.DOCKERHUB_TOKEN }}" | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
           docker-compose build
-          docker-compose push
+          docker push ${{ secrets.DOCKERHUB_USERNAME }}/lookatme:latest
 
       - name: Deploy to Server
         uses: appleboy/ssh-action@master
