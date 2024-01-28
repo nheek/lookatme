@@ -27,14 +27,11 @@ jobs:
           echo "SESSION_SECRET=${{ secrets.SESSION_SECRET }}" >> .env
           echo "DOCKERHUB_USERNAME=${{ secrets.DOCKERHUB_USERNAME }}" >> .env
 
-      - name: Create Docker Compose file
-        run: |
-          # Create a basic docker-compose.yml file
-          echo "version: '3'" >> docker-compose.yml
-          echo "services:" >> docker-compose.yml
-          echo "  your-service:" >> docker-compose.yml
-          echo "    image: ${{ secrets.DOCKERHUB_USERNAME }}/lookatme:latest" >> docker-compose.yml
-          # Add other necessary configurations
+      - name: Display generated .env file
+        run: cat .env
+
+      - name: Display provided docker-compose.yml
+        run: cat docker-compose.yml
 
       - name: Build and Push Docker Images
         run: |
