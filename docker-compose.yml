@@ -11,6 +11,7 @@ services:
       - .env
     environment:
       - PLACEHOLDER=YES
+    command: ["./wait-for-it.sh", "mysql-db:3306", "--", "npm", "start"]
     image: "nheek/lookatme:latest" 
 
   mysql-db:
@@ -21,3 +22,6 @@ services:
       MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
     volumes:
       - ./create_database.sql:/docker-entrypoint-initdb.d/create_database.sql
+
+volumes:
+  mysql-data:
