@@ -27,41 +27,15 @@ jobs:
           echo "SESSION_SECRET=${{ secrets.SESSION_SECRET }}" >> .env
           echo "DOCKERHUB_USERNAME=${{ secrets.DOCKERHUB_USERNAME }}" >> .env
 
-      - name: Display generated .env file
-        run: cat .env
-
-      - name: Display provided docker-compose.yml
-        run: cat docker-compose.yml
+      - name: Create placeholder docker-compose.yml
+        run: touch docker-compose.yml
 
       - name: Build and Push Docker Images
         run: |
           # Log in to Docker Hub and push the images
           echo "${{ secrets.DOCKERHUB_TOKEN }}" | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
-          docker-compose -f docker-compose.yml build
-          docker-compose -f docker-compose.yml push
-
-      - name: Create Tar Archive
-        run: tar -czvf /tmp/QtSvIfHgPN.tar.gz .
-
-      - name: Copy Tar Archive to Server
-        uses: appleboy/scp-action@master
-        with:
-          host: ${{ secrets.SERVER_IP }}
-          username: ${{ secrets.SERVER_USERNAME }}
-          key: ${{ secrets.SERVER_SSH_KEY }}
-          source: /tmp/QtSvIfHgPN.tar.gz
-          target: /apps/lookatme/QtSvIfHgPN.tar.gz
-
-      - name: Remote Setup
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.SERVER_IP }}
-          username: ${{ secrets.SERVER_USERNAME }}
-          key: ${{ secrets.SERVER_SSH_KEY }}
-          script: |
-            mkdir -p /apps/lookatme
-            tar -xzvf /apps/lookatme/QtSvIfHgPN.tar.gz -C /apps/lookatme/
-            rm /apps/lookatme/QtSvIfHgPN.tar.gz
+          docker-compose build
+          docker-compose push ${{ secrets.DOCKERHUB_USERNAME }}/lookatme:latest
 
       - name: Deploy to Server
         uses: appleboy/ssh-action@master
@@ -71,6 +45,6 @@ jobs:
           key: ${{ secrets.SERVER_SSH_KEY }}
           script: |
             # Deploy the Docker Compose project on the remote server
-            docker-compose -f /apps/lookatme/docker-compose.yml pull
-            docker-compose -f /apps/lookatme/docker-compose.yml down
-            docker-compose -f /apps/lookatme/docker-compose.yml up -d
+            docker-compose pull ${{ secrets.DOCKERHUB_USERNAME }}/lookatme:latest
+            docker-compose down
+            docker-compose up -d
