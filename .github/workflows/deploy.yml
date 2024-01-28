@@ -47,9 +47,10 @@ jobs:
           script: |
             # Change to the appropriate directory
             cd /root/apps/lookatme/
+            ls
 
             # Pull the Docker Compose project on the remote server
-            docker-compose pull
-            docker-compose down
-            docker-compose up -d
+            docker-compose -f /root/apps/lookatme/docker-compose.yml pull
+            docker-compose -f /root/apps/lookatme/docker-compose.yml down
+            docker-compose -f /root/apps/lookatme/docker-compose.yml up -d
   
