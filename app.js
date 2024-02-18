@@ -56,7 +56,7 @@ app.use((err, req, res, next) => {
 });
 
 // Set up the server to listen on the specified port
-const PORT = process.env.PORT || 3002;
+const PORT = process.env.PORT || 3006;
 http.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
 });

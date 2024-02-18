@@ -3,9 +3,9 @@ version: '3'
 services:
   node-app:
     build: .
-    restart: always
+    restart: unless-stopped
     ports:
-      - "3002:3002"
+      - "3006:3006"
     depends_on:
       - mysql-db
     env_file:
@@ -16,10 +16,12 @@ services:
 
   mysql-db:
     image: mysql:latest
-    restart: always
+    restart: unless-stopped
+    ports:
+      - "4006:3306"
     env_file:
       - .env
     environment:
       MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
     volumes:
-      - ./create_database.sql:/docker-entrypoint-initdb.d/create_database.sql
+      - .sql_data:/docker-entrypoint-initdb.d/

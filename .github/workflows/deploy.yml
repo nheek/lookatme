@@ -23,7 +23,6 @@ jobs:
           echo "MYSQL_USER=${{ secrets.MYSQL_USER }}" >> .env
           echo "MYSQL_PASSWORD=${{ secrets.MYSQL_PASSWORD }}" >> .env
           echo "MYSQL_DATABASE=${{ secrets.MYSQL_DATABASE }}" >> .env
-          echo "SESSION_SECRET=${{ secrets.SESSION_SECRET }}" >> .env
           echo "DOCKERHUB_USERNAME=${{ secrets.DOCKERHUB_USERNAME }}" >> .env
 
       - name: Build and Push Docker Images
@@ -41,7 +40,7 @@ jobs:
           script: |
             # Change to the appropriate directory..
             cd apps/lookatme/
-
+            
             # Pull the Docker Compose project on the remote server
             docker pull ${{ secrets.DOCKERHUB_USERNAME }}/lookatme:latest
             docker pull mysql
@@ -51,10 +50,12 @@ jobs:
             echo "MYSQL_USER=${{ secrets.MYSQL_USER }}" >> .env
             echo "MYSQL_PASSWORD=${{ secrets.MYSQL_PASSWORD }}" >> .env
             echo "MYSQL_DATABASE=${{ secrets.MYSQL_DATABASE }}" >> .env
-            echo "SESSION_SECRET=${{ secrets.SESSION_SECRET }}" >> .env
             echo "DOCKERHUB_USERNAME=${{ secrets.DOCKERHUB_USERNAME }}" >> .env
             curl -O -L https://raw.githubusercontent.com/nheek/lookatme/main/Dockerfile
             curl -O -L https://raw.githubusercontent.com/nheek/lookatme/main/docker-compose.yml
-            # git pull origin actions-test
+
+            mkdir .sql_data
+            cd .sql_data
+            curl -O -L https://raw.githubusercontent.com/nheek/lookatme/main/.sql_data/create_database.sql
+
             docker-compose up -d
-  
