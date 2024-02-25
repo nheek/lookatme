@@ -14,15 +14,15 @@ const counterRoutes = require('./routes/update-counter');
 const tapCounterRoutes = require('./routes/update-tap-counter');
 
 // Define rate limiting to prevent abuse of the server
-const limiter = rateLimit({
-  windowMs: 1 * 60 * 1000,
-  max: 30,
-  handler: (req, res) => {
-    res.status(429).json({
-      error: 'Too many requests, please try again later.',
-    });
-  },
-});
+// const limiter = rateLimit({
+//   windowMs: 1 * 60 * 1000,
+//   max: 30,
+//   handler: (req, res) => {
+//     res.status(429).json({
+//       error: 'Too many requests, please try again later.',
+//     });
+//   },
+// });
 
 // Set up middleware and routes
 // Apply the limiter middleware to all routes
@@ -56,7 +56,7 @@ app.use((err, req, res, next) => {
 });
 
 // Set up the server to listen on the specified port
-const PORT = process.env.PORT || 3006;
+const PORT = process.env.PORT || 3014;
 http.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
 });

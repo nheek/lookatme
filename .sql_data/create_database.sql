@@ -15,7 +15,7 @@ CREATE TABLE IF NOT EXISTS Counter (
     id INT AUTO_INCREMENT PRIMARY KEY,
     looked_overall INT DEFAULT 0,
     tapped_overall INT DEFAULT 0
-)
+);
 
 INSERT INTO Counter (looked_overall, tapped_overall)
 SELECT 0, 0
