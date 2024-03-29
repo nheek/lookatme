@@ -59,6 +59,7 @@ jobs:
             echo "SESSION_SECRET=${{ secrets.SESSION_SECRET }}" >> .env
             curl -O -L https://raw.githubusercontent.com/nheek/lookatme/main/Dockerfile
             curl -O -L https://raw.githubusercontent.com/nheek/lookatme/main/docker-compose.yml
+            curl -O -L https://raw.githubusercontent.com/nheek/lookatme/main/my.cnf
 
             mkdir .sql_data
             cd .sql_data
