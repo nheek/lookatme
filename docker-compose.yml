@@ -26,4 +26,4 @@ services:
     volumes:
       - .sql_data:/docker-entrypoint-initdb.d/
       - ./my.cnf:/etc/mysql/conf.d/my.cnf  # Mount custom my.cnf file
-    mem_limit: 55M
+    mem_limit: 60M
