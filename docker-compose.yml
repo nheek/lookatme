@@ -25,4 +25,4 @@ services:
       MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
     volumes:
       - .sql_data:/docker-entrypoint-initdb.d/
-    mem_limit: 50mb
+    mem_limit: 50m
