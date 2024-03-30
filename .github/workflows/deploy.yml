@@ -63,6 +63,7 @@ jobs:
             cd .custom_sql_settings
             curl -O -L https://raw.githubusercontent.com/nheek/lookatme/main/.custom_sql_settings/my.cnf
 
+            cd ..
             mkdir .sql_data
             cd .sql_data
             curl -O -L https://raw.githubusercontent.com/nheek/lookatme/main/.sql_data/create_database.sql
