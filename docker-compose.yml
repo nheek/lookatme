@@ -5,7 +5,7 @@ services:
     build: .
     restart: unless-stopped
     ports:
-      - "3000:3000"
+      - "3001:3001"
     depends_on:
       - mysql-db
     env_file:
@@ -18,7 +18,7 @@ services:
     image: mysql:latest
     restart: unless-stopped
     ports:
-      - "4000:3306"
+      - "4001:3306"
     env_file:
       - .env
     environment:
@@ -26,4 +26,3 @@ services:
     volumes:
       - .sql_data:/docker-entrypoint-initdb.d/
       - .custom_sql_settings:/etc/mysql/conf.d/  # Mount custom my.cnf file
-    # mem_limit: 55M
