@@ -12,42 +12,37 @@ let tapCounter = 0;
 let tapTimeout;
 
 // Define a route to handle POST requests
+// Inside your POST route
 router.post("/", (req, res) => {
   try {
-    // Increment the in-memory tap counter
     tapCounter += 1;
-
-    // Clear the existing timeout (if any)
     clearTimeout(tapTimeout);
 
-    // Set a new timeout for database update after 1 second (adjust as needed)
     tapTimeout = setTimeout(async () => {
-      // Update the database counter with the tapped count
-      const updateSql =
-        "UPDATE Counter SET tapped_overall = tapped_overall + ?";
-      const selectSql = "SELECT tapped_overall FROM Counter";
+      try {
+        // Update the database
+        const updateSql = `UPDATE "Counter" SET tapped_overall = tapped_overall + $1`;
+        await db.query(updateSql, [tapCounter]);
 
-      // Execute the update query
-      await db.query(updateSql, [tapCounter]);
-
-      // Query the updated counter value from the database
-      const [selectResults] = await db.query(selectSql);
-
-      // Emit the updated counter value to all connected clients
-      io.emit("counterTaps", selectResults[0].tapped_overall);
-
-      // Reset the in-memory tap counter after updating the database
-      tapCounter = 0;
-
-      // Respond with a JSON indicating success and a message
-      res.json({ success: true, message: "Counters updated successfully" });
-    }, 1000); // 1 second delay (adjust as needed)
+        // Emit the updated value immediately
+        const selectSql = `SELECT tapped_overall FROM "Counter"`;
+        const { rows: selectResults } = await db.query(selectSql);
+        io.emit("counterTaps", selectResults[0].tapped_overall);
+        
+        // Reset tapCounter
+        tapCounter = 0;
+        res.json({ success: true, message: "Counters updated successfully" });
+      } catch (dbError) {
+        console.error("Database error:", dbError);
+        res.status(500).send("Internal Server Error");
+      }
+    }, 1000); // 1 second delay
   } catch (err) {
-    // Handle errors
     console.error("Error:", err);
     res.status(500).send("Internal Server Error");
   }
 });
+
 
 // Export the router for use in other parts of the application
 module.exports = router;

@@ -18,7 +18,7 @@ router.post("/", async (req, res) => {
     }
 
     // Define the SQL query to increment the 'looked_overall' counter in the 'Counter' table
-    const updateSql = "UPDATE Counter SET looked_overall = looked_overall + 1";
+    const updateSql = `UPDATE "Counter" SET looked_overall = looked_overall + 1`;
 
     // Execute the SQL query using the database connection
     await db.query(updateSql);
@@ -27,10 +27,10 @@ router.post("/", async (req, res) => {
     req.session.user = "Guest";
 
     // Define a SQL query to retrieve the updated 'looked_overall' value
-    const selectSql = "SELECT looked_overall FROM Counter";
+    const selectSql = `SELECT looked_overall FROM "Counter"`;
 
     // Execute the SQL query to get the updated counter value
-    const [selectResults] = await db.query(selectSql);
+    const { rows: selectResults } = await db.query(selectSql);
 
     // Emit the updated 'looked_overall' value to all connected clients using Socket.IO
     io.emit("counterViews", selectResults[0].looked_overall);

@@ -12,16 +12,19 @@ const io = ioManager.getIO();
 router.get("/", async (req, res) => {
   try {
     // Define the SQL query to retrieve data from the 'Counter' table
-    const sql = "SELECT * FROM Counter";
+    const sql = `SELECT * FROM "Counter"`;
 
     // Execute the SQL query using the promise-based API of the database connection
-    const results = await db.query(sql);
+    const result = await db.query(sql);
+
+    // The result is an object with a 'rows' property containing the results
+    const rows = result.rows;
 
     // Emit the overall view count to all connected clients using Socket.IO
-    io.emit("counterViews", results[0][0].looked_overall);
+    io.emit("counterViews", rows[0].looked_overall);
 
     // Render the 'index' view, passing data to be displayed on the page
-    res.render("index", { pageTitle: "Home", counter: results[0] });
+    res.render("index", { pageTitle: "Home", counter: rows });
   } catch (err) {
     console.error("Error executing query:", err);
     // Send a 500 Internal Server Error response to the client

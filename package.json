@@ -4,10 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "setup-database": "mysql -u lookatme -p < create_database.sql",
+    "setup-database": "psql -U lookatme -f create_database.sql",
     "build:css": "npx tailwindcss -i ./public/styles/style.css -o ./public/styles/tailwind.css",
     "dev": "nodemon app.js",
-    "start": "wait-for-it mysql-db:3306 -- npm run start-app",
+    "start": "wait-for-it postgres:5432 -- npm run start-app",
     "start-app": "node app.js",
     "prettier": "prettier --write ."
   },
@@ -24,7 +24,7 @@
     "express-session": "^1.18.1",
     "helmet": "^8.0.0",
     "http": "^0.0.1-security",
-    "mysql2": "^3.11.3",
+    "pg": "^8.13.0",
     "prettier": "^3.3.3",
     "socket.io": "^4.8.0",
     "socket.io-client": "^4.8.0"

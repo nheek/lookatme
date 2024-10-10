@@ -7,26 +7,25 @@ services:
     ports:
       - "3001:3001"
     depends_on:
-      - mysql-db
+      - postgres
     env_file:
       - .env
     environment:
       - PLACEHOLDER=YES
     image: "nheek/lookatme:latest"
 
-  mysql-db:
-    image: mysql:latest
+  postgres:
+    image: postgres:latest
     restart: unless-stopped
     ports:
-      - "4001:3306"
+      - 4001:3306
     env_file:
       - .env
     environment:
-      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+      PLACEHOLDER: "YES"
     volumes:
-      - mysql_db_data:/var/lib/mysql
+      - postgres_db_data:/var/lib/postgresql/data
       - .sql_data:/docker-entrypoint-initdb.d/
-      - .custom_sql_settings:/etc/mysql/conf.d/
 
 volumes:
-  mysql_db_data:
+  postgres_db_data:
