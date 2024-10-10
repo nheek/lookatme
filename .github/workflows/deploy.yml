@@ -43,7 +43,7 @@ jobs:
             cd apps
             mkdir lookatme
             cd lookatme
-            
+
             # Pull the Docker Compose project on the remote server
             echo "${{ secrets.DOCKERHUB_TOKEN }}" | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
             docker pull ${{ secrets.DOCKERHUB_USERNAME }}/lookatme:latest

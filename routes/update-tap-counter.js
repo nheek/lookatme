@@ -1,52 +1,52 @@
 // Import the ioManager from socket.js, which manages the Socket.IO instance
-const ioManager = require('../src/socket');
+const ioManager = require("../src/socket");
 // Get the singleton io instance from the ioManager
 const io = ioManager.getIO();
 // Import necessary dependencies and configurations
-const { express } = require('../src/config');
+const { express } = require("../src/config");
 const router = express.Router();
-const { db } = require('../src/database');
+const { db } = require("../src/database");
 
 // In-memory variables to track tap counter and timeout
-let tapCounter = 0; 
+let tapCounter = 0;
 let tapTimeout;
 
 // Define a route to handle POST requests
-router.post('/', (req, res) => {
-    try {
-        // Increment the in-memory tap counter
-        tapCounter += 1;
-        
-        // Clear the existing timeout (if any)
-        clearTimeout(tapTimeout);
+router.post("/", (req, res) => {
+  try {
+    // Increment the in-memory tap counter
+    tapCounter += 1;
 
-        // Set a new timeout for database update after 1 second (adjust as needed)
-        tapTimeout = setTimeout(async () => {
-            // Update the database counter with the tapped count
-            const updateSql = 'UPDATE Counter SET tapped_overall = tapped_overall + ?';
-            const selectSql = 'SELECT tapped_overall FROM Counter';
+    // Clear the existing timeout (if any)
+    clearTimeout(tapTimeout);
 
-            // Execute the update query
-            await db.query(updateSql, [tapCounter]);
+    // Set a new timeout for database update after 1 second (adjust as needed)
+    tapTimeout = setTimeout(async () => {
+      // Update the database counter with the tapped count
+      const updateSql =
+        "UPDATE Counter SET tapped_overall = tapped_overall + ?";
+      const selectSql = "SELECT tapped_overall FROM Counter";
 
-            // Query the updated counter value from the database
-            const [selectResults] = await db.query(selectSql);
+      // Execute the update query
+      await db.query(updateSql, [tapCounter]);
 
-            // Emit the updated counter value to all connected clients
-            io.emit('counterTaps', selectResults[0].tapped_overall);
-          
-            // Reset the in-memory tap counter after updating the database
-            tapCounter = 0;
+      // Query the updated counter value from the database
+      const [selectResults] = await db.query(selectSql);
 
-            // Respond with a JSON indicating success and a message
-            res.json({ success: true, message: 'Counters updated successfully' });
-        }, 1000); // 1 second delay (adjust as needed)
+      // Emit the updated counter value to all connected clients
+      io.emit("counterTaps", selectResults[0].tapped_overall);
 
-    } catch (err) {
-        // Handle errors
-        console.error('Error:', err);
-        res.status(500).send('Internal Server Error');
-    }
+      // Reset the in-memory tap counter after updating the database
+      tapCounter = 0;
+
+      // Respond with a JSON indicating success and a message
+      res.json({ success: true, message: "Counters updated successfully" });
+    }, 1000); // 1 second delay (adjust as needed)
+  } catch (err) {
+    // Handle errors
+    console.error("Error:", err);
+    res.status(500).send("Internal Server Error");
+  }
 });
 
 // Export the router for use in other parts of the application

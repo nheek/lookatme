@@ -31,15 +31,15 @@ Just follow the steps below and you should be good to go.
 
 1. Clone the repository:
 
-    ```bash
-    git clone https://github.com/nheek/lookatme.git your-project
-    ```
+   ```bash
+   git clone https://github.com/nheek/lookatme.git your-project
+   ```
 
 2. Change into the project directory:
 
-    ```bash
-    cd your-project
-    ```
+   ```bash
+   cd your-project
+   ```
 
 ### Development <a name="development"></a>
 
