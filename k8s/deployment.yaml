@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: lookatme-deployment
+  namespace: cloudnative-pg
+  labels:
+    app: lookatme
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: lookatme
+  template:
+    metadata:
+      labels:
+        app: lookatme
+    spec:
+      imagePullSecrets:
+        - name: regcred
+      containers:
+        - name: lookatme
+          image: nheek/lookatme:latest
+          ports:
+            - containerPort: 3001
+          resources:
+            limits:
+              memory: "100Mi"
