@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: lookatme-deployment
+  name: lookatme-d
   namespace: cloudnative-pg
   labels:
     app: lookatme
@@ -23,5 +23,5 @@ spec:
           ports:
             - containerPort: 3001
           resources:
-            limits:
-              memory: "100Mi"
+            requests:
+              memory: "30Mi"
