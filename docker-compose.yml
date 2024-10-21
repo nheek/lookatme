@@ -17,8 +17,6 @@ services:
   postgres:
     image: postgres:latest
     restart: unless-stopped
-    ports:
-      - 4001:3306
     env_file:
       - .env
     environment:
