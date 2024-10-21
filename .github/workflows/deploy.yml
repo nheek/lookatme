@@ -44,11 +44,6 @@ jobs:
             mkdir lookatme
             cd lookatme
 
-            # Pull the Docker Compose project on the remote server
-            echo "${{ secrets.DOCKERHUB_TOKEN }}" | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
-            docker pull ${{ secrets.DOCKERHUB_USERNAME }}/lookatme:latest
-            docker pull postgres
-
             rm -rf .env
             echo "POSTGRES_PORT=${{ secrets.POSTGRES_PORT }}" >> .env
             echo "POSTGRES_HOST=${{ secrets.POSTGRES_HOST }}" >> .env
@@ -57,7 +52,7 @@ jobs:
             echo "POSTGRES_DATABASE=${{ secrets.POSTGRES_DATABASE }}" >> .env
             echo "DOCKERHUB_USERNAME=${{ secrets.DOCKERHUB_USERNAME }}" >> .env
             echo "SESSION_SECRET=${{ secrets.SESSION_SECRET }}" >> .env
-            
+
             curl -O -L https://raw.githubusercontent.com/nheek/lookatme/main/Dockerfile
             curl -O -L https://raw.githubusercontent.com/nheek/lookatme/main/docker-compose.yml
 
@@ -66,4 +61,5 @@ jobs:
             curl -O -L https://raw.githubusercontent.com/nheek/lookatme/main/.sql_data/create_database.sql
             cd ..
             
-            docker compose up -d
+            docker compose pull
+            docker compose up -d && curl -d "lookatme deployed successfully" https://ntfy.nheek.com/${{ secrets.NTFY_TOPIC }}
