@@ -1,0 +1,64 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: lookatme-d
+  labels:
+    app: lookatme
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: lookatme
+  template:
+    metadata:
+      labels:
+        app: lookatme
+    spec:
+      imagePullSecrets:
+        - name: regcrednheek
+      containers:
+        - name: lookatme
+          image: reg.nheek.com/nheek/lookatme:latest
+          env:
+          - name: POSTGRES_DATABASE
+            valueFrom:
+              secretKeyRef:
+                name: lookatme-secret
+                key: POSTGRES_DATABASE
+          - name: POSTGRES_USER
+            valueFrom:
+              secretKeyRef:
+                name: lookatme-secret
+                key: POSTGRES_USER
+          - name: POSTGRES_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: lookatme-secret
+                key: POSTGRES_PASSWORD
+          - name: POSTGRES_HOST
+            valueFrom:
+              secretKeyRef:
+                name: lookatme-secret
+                key: POSTGRES_HOST
+          ports:
+            - containerPort: 3001
+          resources:
+            requests:
+              memory: "40Mi"
+              cpu: "40m"
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 3001
+            initialDelaySeconds: 10
+            periodSeconds: 2
+            timeoutSeconds: 2
+            failureThreshold: 10
+            successThreshold: 1
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 3001
+            initialDelaySeconds: 10
+            periodSeconds: 2
+            failureThreshold: 10

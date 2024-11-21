@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: lookatme-service
+  labels:
+    app: lookatme
+spec:
+  type: ClusterIP
+  ports:
+    - port: 80
+      targetPort: 3001
+  selector:
+    app: lookatme
