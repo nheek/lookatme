@@ -5,9 +5,9 @@ metadata:
   labels:
     app: lookatme
 spec:
-  type: ClusterIP
+  type: LoadBalancer
   ports:
-    - port: 80
+    - port: 30085
       targetPort: 3001
   selector:
     app: lookatme
