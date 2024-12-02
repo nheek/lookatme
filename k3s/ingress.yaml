@@ -14,4 +14,4 @@ spec:
           service:
             name: lookatme-service
             port:
-              number: 30085
+              number: 80
